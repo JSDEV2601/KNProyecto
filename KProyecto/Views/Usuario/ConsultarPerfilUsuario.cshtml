@@ -1,0 +1,7 @@
+﻿@model KProyecto.Models.Usuario
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.TextBoxFor(x => x.Nombre, new { @type = "text", @class = "form-control form-control-lg", @placeholder = "Nombre" })
