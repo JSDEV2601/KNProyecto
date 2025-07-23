@@ -27,7 +27,39 @@ namespace KProyecto.EF
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<TProducto> TProducto { get; set; }
+        public virtual DbSet<TRol> TRol { get; set; }
         public virtual DbSet<TUsuario> TUsuario { get; set; }
+    
+        public virtual ObjectResult<ConsultarProductos_Result> ConsultarProductos()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ConsultarProductos_Result>("ConsultarProductos");
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> RegistroProducto(string nombre, string descripcion, Nullable<int> cantidad, Nullable<decimal> precio, string imagen)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("Cantidad", cantidad) :
+                new ObjectParameter("Cantidad", typeof(int));
+    
+            var precioParameter = precio.HasValue ?
+                new ObjectParameter("Precio", precio) :
+                new ObjectParameter("Precio", typeof(decimal));
+    
+            var imagenParameter = imagen != null ?
+                new ObjectParameter("Imagen", imagen) :
+                new ObjectParameter("Imagen", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("RegistroProducto", nombreParameter, descripcionParameter, cantidadParameter, precioParameter, imagenParameter);
+        }
     
         public virtual int RegistroUsuario(string identificacion, string nombre, string correo, string contrasenna)
         {

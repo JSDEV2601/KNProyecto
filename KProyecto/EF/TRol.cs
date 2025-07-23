@@ -10,15 +10,20 @@
 namespace KProyecto.EF
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class ValidarInicioSesion_Result
+    public partial class TRol
     {
-        public long IdUsuario { get; set; }
-        public string Identificacion { get; set; }
-        public string Nombre { get; set; }
-        public string Correo { get; set; }
-        public string Contrasenna { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TRol()
+        {
+            this.TUsuario = new HashSet<TUsuario>();
+        }
+    
         public int IdRol { get; set; }
         public string DescripcionRol { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TUsuario> TUsuario { get; set; }
     }
 }

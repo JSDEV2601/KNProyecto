@@ -9,7 +9,7 @@ namespace KProyecto.Controllers
 {
     public class HomeController : Controller
     {
-        Utilitarios service = new Utilitarios();
+        readonly Utilitarios service = new Utilitarios();
 
         #region Index
 
@@ -35,6 +35,8 @@ namespace KProyecto.Controllers
                 {
                     Session["IdUsuario"] = result.IdUsuario;
                     Session["Nombre"] = result.Nombre;
+                    Session["IdRol"] = result.IdRol;
+                    Session["DescripcionRol"] = result.DescripcionRol;
                     return RedirectToAction("Principal", "Home");
                 }
 
@@ -101,14 +103,18 @@ namespace KProyecto.Controllers
 
                 if (result != null)
                 {
+                    var Contrasenna = service.GenerarPassword();
+
+                    result.Contrasenna = Contrasenna;
+                    dbContext.SaveChanges();
+
                     StringBuilder mensaje = new StringBuilder();
 
-                    mensaje.Append("Estimado " + result.Nombre + "<br/>");
-                    mensaje.Append("Se ha generado una solicitud de recuperación de contraseña a su nombre<br/>");
-                    mensaje.Append("Su contraseña temporal es: " + result.Contrasenna + "\n\n");
-
-                    mensaje.Append("Procure realizar el cambio de su contraseña en cuanto ingrese al sistema\n");
-                    mensaje.Append("Muchas gracias\n");
+                    mensaje.Append("Estimado " + result.Nombre + "<br>");
+                    mensaje.Append("Se ha generado una solicitud de recuperación de contraseña a su nombre.<br><br>");
+                    mensaje.Append("Su contraseña temporal es: " + Contrasenna + "<br><br>");
+                    mensaje.Append("Procure realizar el cambio de su contraseña en cuanto ingrese al sistema.<br>");
+                    mensaje.Append("Muchas gracias.");
 
                     if (service.EnviarCorreo(result.Correo, mensaje.ToString(), "Solicitud de acceso"))
                         return RedirectToAction("Index", "Home");
@@ -124,10 +130,19 @@ namespace KProyecto.Controllers
 
         #endregion
 
+        [FiltroSesion]
         [HttpGet]
         public ActionResult Principal()
         {
             return View();
+        }
+
+        [FiltroSesion]
+        [HttpGet]
+        public ActionResult CerrarSesion()
+        {
+            Session.Clear();
+            return RedirectToAction("Index", "Home");
         }
 
     }

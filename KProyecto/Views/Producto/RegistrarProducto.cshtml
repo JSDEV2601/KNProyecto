@@ -1,0 +1,71 @@
+﻿@model KProyecto.Models.Producto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+
+    @using (Html.BeginForm("RegistrarProducto", "Producto", FormMethod.Post, new { @class = "form-horizontal m-t-20", @enctype="Multipart/form-data" }))
+    {
+        <div class="card-body">
+            <h4 class="card-title">Registro de Productos</h4>
+
+            <hr><br />
+
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-8">
+
+                    @if (!string.IsNullOrEmpty(ViewBag.Mensaje))
+                    {
+                        <div class="alert alert-warning text-center">
+                            @ViewBag.Mensaje
+                        </div>
+                    }
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Nombre:</label>
+                            @Html.TextBoxFor(x => x.Nombre, new { @type = "text", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Descripción:</label>
+                            @Html.TextAreaFor(x => x.Descripcion, new { @type = "text", @class = "form-control", @rows = 5 })
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Cantidad:</label>
+                            @Html.TextBoxFor(x => x.Cantidad, new { @type = "text", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Precio:</label>
+                            @Html.TextBoxFor(x => x.Precio, new { @type = "text", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Imagen:</label>
+                            <input type="file" id="ImagenProducto" name="ImagenProducto" accept="image/png" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-right pb-2 pr-4">
+                <button class="btn btn-info" type="submit">Procesar</button>
+            </div>
+        </div>
+    }
+
+</div>
+
+<script src="~/Scripts/Site/Comunes.js"></script>

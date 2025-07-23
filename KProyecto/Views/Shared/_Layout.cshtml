@@ -9,12 +9,16 @@
     <meta name="author" content="">
     <title>Proyecto KN</title>
     <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/2.3.2/css/dataTables.bootstrap4.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
 </head>
 
 <body>
 
-    @{ 
+    @{
         var nombre = Session["Nombre"].ToString();
+        var idRol = Session["IdRol"].ToString();
+        var descripcionRol = Session["DescripcionRol"].ToString();
     }
 
     <div id="main-wrapper">
@@ -25,7 +29,7 @@
                         <i class="ti-menu ti-close"></i>
                     </a>
                     <div class="navbar-brand">
-                        <a href="index.html" class="logo">
+                        <a href="@Url.Action("Principal","Home")" class="logo">
                             <b class="logo-icon">
                                 <img src="~/Images/logo-icon.png" alt="homepage" class="dark-logo" />
                                 <img src="~/Images/logo-light-icon.png" alt="homepage" class="light-logo" />
@@ -44,14 +48,22 @@
                         <i class="ti-more"></i>
                     </a>
                 </div>
+
+
+
                 <div class="navbar-collapse collapse" id="navbarSupportedContent">
+
                     <ul class="navbar-nav float-left mr-auto">
-                    </ul>
-                    <ul class="navbar-nav float-right">
-                       
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="~/Images/2.jpg" alt="user" class="rounded-circle" width="40">
+                                <span class="m-l-5 font-medium d-none d-sm-inline-block"> @descripcionRol</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav float-right">
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="m-l-5 font-medium d-none d-sm-inline-block"> @nombre <i class="mdi mdi-chevron-down"></i></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
@@ -65,14 +77,15 @@
                                         <i class="ti-settings m-r-5 m-l-5"></i> Perfil
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0)">
-                                        <i class="ti-settings m-r-5 m-l-5"></i> Account Setting
+                                    <a class="dropdown-item" href="@Url.Action("CambiarContrasenna","Usuario")">
+                                        <i class="ti-lock m-r-5 m-l-5"></i> Seguridad
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0)">
-                                        <i class="fa fa-power-off m-r-5 m-l-5"></i> Logout
+                                    <a class="dropdown-item" href="@Url.Action("CerrarSesion","Home")">
+                                        <i class="fa fa-sign-out-alt m-r-5 m-l-5"></i> Salir
                                     </a>
                                 </div>
+
                             </div>
                         </li>
                     </ul>
@@ -83,7 +96,22 @@
             <div class="scroll-sidebar">
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.html" aria-expanded="false"><i class="ti-loop"></i><span class="hide-menu">Back To Home</span></a></li>
+
+                        @if (idRol == "1")
+                        {
+                            //Usuario Regular
+
+                        }
+                        else
+                        {
+                            //Usuario Administrador
+                            <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("ConsultarProductos","Producto")" aria-expanded="false">
+                                    <i class="ti-tag"></i><span class="hide-menu">Mant. Productos</span>
+                                </a>
+                            </li>
+                        }
+
                     </ul>
                 </nav>
             </div>
@@ -115,7 +143,8 @@
     <script src="~/Scripts/waves.js"></script>
     <script src="~/Scripts/sidebarmenu.js"></script>
     <script src="~/Scripts/custom.min.js"></script>
-
+    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap4.js"></script>
 </body>
 
 </html>

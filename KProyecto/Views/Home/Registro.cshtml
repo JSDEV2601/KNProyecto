@@ -19,7 +19,6 @@
 
                     @using (Html.BeginForm("Registro", "Home", FormMethod.Post, new { @class = "form-horizontal m-t-20" }))
                     {
-
                         if (!string.IsNullOrEmpty(ViewBag.Mensaje))
                         {
                             <div class="alert alert-warning text-center">
@@ -29,9 +28,10 @@
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
+                                <span class="input-group-text" id="basic-addon1"><i class="ti-id-badge"></i></span>
                             </div>
-                            @Html.TextBoxFor(x => x.Identificacion, new { @type = "text", @class = "form-control form-control-lg", @placeholder = "Identificación" })
+                            @Html.TextBoxFor(x => x.Identificacion, new { @type = "text", @class = "form-control form-control-lg", @placeholder = "Identificación",
+                            @onkeyup = "ConsultarPersonaApi()" })
                         </div>
 
                         <div class="input-group mb-3">
@@ -43,19 +43,17 @@
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
+                                <span class="input-group-text" id="basic-addon1"><i class="ti-email"></i></span>
                             </div>
                             @Html.TextBoxFor(x => x.Correo, new { @type = "email", @class = "form-control form-control-lg", @placeholder = "Correo" })
                         </div>
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon2"><i class="ti-pencil"></i></span>
+                                <span class="input-group-text" id="basic-addon2"><i class="ti-lock"></i></span>
                             </div>
                             @Html.TextBoxFor(x => x.Contrasenna, new { @type = "password", @class = "form-control form-control-lg", @placeholder = "Contraseña" })
                         </div>
-
-
 
                         <div class="form-group text-center">
                             <div class="col-xs-12 p-b-20">
@@ -79,3 +77,5 @@
 
     </div>
 </div>
+
+<script src="~/Scripts/Site/Comunes.js"></script>
